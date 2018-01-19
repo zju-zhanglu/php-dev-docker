@@ -11,10 +11,9 @@ RUN mkdir -p ${SRC_DIR}
 # -----------------------------------------------------------------------------
 # Install Development tools
 # -----------------------------------------------------------------------------
-RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup \
+RUN yum -y install wget \ 
+    && mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup \
     && wget -q -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
-    && mv /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel.repo.backup \
-    && mv /etc/yum.repos.d/epel-testing.repo /etc/yum.repos.d/epel-testing.repo.backup \
     && wget -q -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo \
     && yum makecache \
     && rpm --import /etc/pki/rpm-gpg/RPM* \
@@ -22,7 +21,7 @@ RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backu
     && yum -y update \
     && yum groupinstall -y "Development tools" \
     && yum -y install gcc-c++ ncurses-devel sqlite-devel zlib zlib-devel \
-    wget man man-pages tar gzip unzip file sudo \
+    man man-pages tar gzip unzip file sudo \
     bzip2 bzip2-devel perl-devel perl-ExtUtils-Embed perl-CPAN \
     pcre pcre-devel openssh-server openssh openssl-devel \
     screen vim git telnet expat expat-devel ca-certificates m4 \
@@ -42,7 +41,8 @@ RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backu
 # -----------------------------------------------------------------------------
 # Install pip supervisor and distribute ...
 # -----------------------------------------------------------------------------
-RUN pip install supervisor distribute \
+RUN pip install --upgrade pip \
+    && pip install supervisor distribute \
     && rm -rf /tmp/*
 
 # -----------------------------------------------------------------------------
