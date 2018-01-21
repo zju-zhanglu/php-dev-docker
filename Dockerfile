@@ -553,7 +553,7 @@ RUN cd ${SRC_DIR} \
 # -----------------------------------------------------------------------------
 RUN npm install apidoc nodemon -g
 
-RUN ${PHP_INSTALL_DIR}/bin/composer global require "laravel/installer"
+RUN ${PHP_INSTALL_DIR}/bin/php ${PHP_INSTALL_DIR}/bin/composer global require "laravel/installer"
 
 # -----------------------------------------------------------------------------
 # Copy Config
